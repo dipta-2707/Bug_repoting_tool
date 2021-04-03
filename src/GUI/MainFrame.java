@@ -1,0 +1,914 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package GUI;
+import Code.*;
+import com.bulenkov.darcula.DarculaLaf;
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.basic.BasicLookAndFeel;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Dipto
+ */
+public class MainFrame extends javax.swing.JFrame {
+
+    /**
+     * Creates new form MainFrame
+     */
+    Database db = new Database();
+    public MainFrame(String name){
+        initComponents();
+         jLabel25.setForeground(Color.white);
+         newCount();
+        setIconImage();
+        jPanel4.setVisible(false);
+        l_userName.setText(name);
+        dateTime();
+        clearReport();
+        loadBugId(Integer.parseInt(js_projectId.getValue().toString()));
+        
+    }
+        private void setIconImage(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icons8-bug-32.png")));
+    }
+    public MainFrame() {
+        initComponents();
+
+    }
+    private void progressBar(){
+       
+        int  _new = 0;
+        int re = 0;
+        int dup = 0;
+        int de = 0;
+        int inp = 0;
+        int fix = 0;
+        int closed = 0;
+        int reopen = 0;
+        DefaultTableModel model = (DefaultTableModel)jtable_dashboard.getModel();
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("new")){
+                _new++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Rejected")){
+                re++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Deffered")){
+                de++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Deffered")){
+                dup++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("In Progress..")){
+                inp++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Fixed")){
+                fix++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Closed")){
+                closed++;
+            }
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("Reopen")){
+                reopen++;
+            }
+        }
+        jProgressBar2.setValue(_new*10);
+        jProgressBar2.setString(""+_new);
+        jProgressBar3.setValue(re*10);
+        jProgressBar3.setString(""+re);
+        jProgressBar4.setValue(de*10);
+        jProgressBar4.setString(""+de);
+        jProgressBar5.setValue(dup*10);
+        jProgressBar5.setString(""+dup);
+        jProgressBar6.setValue(inp*10);
+        jProgressBar6.setString(""+inp);
+        jProgressBar7.setValue(fix*10);
+        jProgressBar7.setString(""+fix);
+        jProgressBar8.setValue(closed*10);
+        jProgressBar8.setString(""+closed);
+        jProgressBar1.setValue(reopen*10);
+        jProgressBar1.setString(""+reopen);
+        
+    }
+    private void setTableColor(){
+        DefaultTableModel model = (DefaultTableModel)jtable_dashboard.getModel();
+        for(int i=0;i<model.getRowCount();i++){
+            if(model.getValueAt(i, 5).toString().equalsIgnoreCase("new")){
+                //model.setRowColour(i, Color.BLUE);
+                
+            }
+        }
+    }
+    private void loadBugId(int pid){
+        int max = db.getBid(pid) + 1;
+        l_bugId.setText(""+max);
+    }
+    private void dateTime(){
+    LocalDateTime myDateObj = LocalDateTime.now();
+    
+    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    String formattedDate = myDateObj.format(myFormatObj);
+    l_dateTime.setText(""+formattedDate);
+    }
+    private void clearReport(){
+        jButton3.setText("SUBMIT");
+        js_projectId.setValue(0);
+        l_bugId.setText("00");
+        tf_bugName.setText("");
+        ta_description.setText("");
+        jt_path.setText("");
+        jc_status.setSelectedIndex(0);
+        
+    }
+    private void newCount(){
+        count = db.getCount();
+        if(count > 0){
+          jPanel3.setVisible(true);
+          jLabel33.setText(""+count);
+        }else{
+            jPanel3.setVisible(false);
+        }
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        l_userName = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tf_bugName = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_description = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jc_status = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        l_bugId = new javax.swing.JLabel();
+        js_projectId = new javax.swing.JSpinner();
+        jt_path = new javax.swing.JTextField();
+        l_dateTime = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jLabel11 = new javax.swing.JTextArea();
+        jLabel21 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtable_dashboard = new javax.swing.JTable();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jProgressBar2 = new javax.swing.JProgressBar();
+        jProgressBar3 = new javax.swing.JProgressBar();
+        jProgressBar4 = new javax.swing.JProgressBar();
+        jProgressBar5 = new javax.swing.JProgressBar();
+        jProgressBar6 = new javax.swing.JProgressBar();
+        jProgressBar7 = new javax.swing.JProgressBar();
+        jProgressBar8 = new javax.swing.JProgressBar();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(51, 51, 51));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        l_userName.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        l_userName.setText("Guest");
+        getContentPane().add(l_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+
+        jTabbedPane1.setBackground(new java.awt.Color(51, 51, 51));
+        jTabbedPane1.setAlignmentX(0.0F);
+        jTabbedPane1.setAlignmentY(0.0F);
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setForeground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("project ID");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 122, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel2.setText("Bug ID");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 157, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel3.setText("Bug Name");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 190, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel4.setText("Description");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 247, -1, -1));
+
+        tf_bugName.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.add(tf_bugName, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 189, 144, -1));
+
+        ta_description.setBackground(new java.awt.Color(153, 153, 153));
+        ta_description.setColumns(20);
+        ta_description.setRows(5);
+        jScrollPane1.setViewportView(ta_description);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 247, 303, 85));
+
+        jLabel5.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel5.setText("Attachment");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 356, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel6.setText("Status");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 385, -1, -1));
+
+        jc_status.setBackground(new java.awt.Color(153, 153, 153));
+        jc_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "New", "Rejected", "Deffered", "Duplicate", "In Progress..", "Fixed", "Closed", "Reopen" }));
+        jPanel1.add(jc_status, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 384, 109, -1));
+
+        jLabel7.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel7.setText("Date & Time");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 422, -1, -1));
+
+        jButton3.setText("SUBMIT");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 450, 108, -1));
+
+        l_bugId.setForeground(new java.awt.Color(255, 255, 255));
+        l_bugId.setText("00");
+        jPanel1.add(l_bugId, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 159, -1, -1));
+
+        js_projectId.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        js_projectId.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                js_projectIdStateChanged(evt);
+            }
+        });
+        jPanel1.add(js_projectId, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 122, 41, 17));
+
+        jt_path.setEditable(false);
+        jt_path.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.add(jt_path, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 355, 223, -1));
+
+        l_dateTime.setForeground(new java.awt.Color(255, 255, 255));
+        l_dateTime.setText("friday");
+        jPanel1.add(l_dateTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 424, 118, -1));
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/upload.png"))); // NOI18N
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 355, -1, 23));
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/refresh.png"))); // NOI18N
+        jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel23MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(507, 355, -1, 23));
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/logo.png"))); // NOI18N
+        jPanel1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 4, -1, 100));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/close.png"))); // NOI18N
+        jLabel29.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel29MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, -1, 30));
+
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/minimize.png"))); // NOI18N
+        jLabel30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel30MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, -1, 30));
+
+        jTabbedPane1.addTab("tab1", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel11.setEditable(false);
+        jLabel11.setColumns(20);
+        jLabel11.setRows(5);
+        jScrollPane3.setViewportView(jLabel11);
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/cross.png"))); // NOI18N
+        jLabel21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel21MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 378, Short.MAX_VALUE)
+                        .addComponent(jLabel21)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 420, 210));
+
+        jtable_dashboard.setBackground(new java.awt.Color(153, 153, 153));
+        jtable_dashboard.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Project Id", "Bug Id", "Bug Name", "Description", "Photo", "Status", "Date&Time", "Push by", "path"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtable_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtable_dashboardMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtable_dashboard);
+        if (jtable_dashboard.getColumnModel().getColumnCount() > 0) {
+            jtable_dashboard.getColumnModel().getColumn(0).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(1).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(2).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(3).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(4).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(5).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(6).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(7).setResizable(false);
+            jtable_dashboard.getColumnModel().getColumn(8).setResizable(false);
+        }
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 730, 340));
+
+        jProgressBar1.setStringPainted(true);
+        jPanel2.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 100, -1));
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Reopen");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, -1, -1));
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("New");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Rejected");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Deffered");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, -1, -1));
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Duplicate");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, -1, -1));
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("In Progress");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Fixed");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
+
+        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel18.setFont(new java.awt.Font("Arial Black", 0, 10)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Closed");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, -1, -1));
+
+        jProgressBar2.setBackground(new java.awt.Color(102, 204, 0));
+        jProgressBar2.setStringPainted(true);
+        jPanel2.add(jProgressBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 90, -1));
+
+        jProgressBar3.setForeground(new java.awt.Color(255, 51, 51));
+        jProgressBar3.setStringPainted(true);
+        jPanel2.add(jProgressBar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 90, -1));
+
+        jProgressBar4.setForeground(new java.awt.Color(0, 153, 153));
+        jProgressBar4.setStringPainted(true);
+        jPanel2.add(jProgressBar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 90, -1));
+
+        jProgressBar5.setStringPainted(true);
+        jPanel2.add(jProgressBar5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 90, -1));
+
+        jProgressBar6.setForeground(new java.awt.Color(255, 153, 51));
+        jProgressBar6.setStringPainted(true);
+        jPanel2.add(jProgressBar6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 90, -1));
+
+        jProgressBar7.setForeground(new java.awt.Color(0, 153, 0));
+        jProgressBar7.setStringPainted(true);
+        jPanel2.add(jProgressBar7, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 90, -1));
+
+        jProgressBar8.setForeground(new java.awt.Color(204, 0, 102));
+        jProgressBar8.setStringPainted(true);
+        jPanel2.add(jProgressBar8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 90, -1));
+
+        jLabel19.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/edit.png"))); // NOI18N
+        jLabel19.setText("Edit");
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel19MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/delete.png"))); // NOI18N
+        jLabel20.setText("Delete");
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/close.png"))); // NOI18N
+        jLabel31.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel31MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, -1, 30));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/minimize.png"))); // NOI18N
+        jLabel32.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel32MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, -1, 30));
+
+        jTabbedPane1.addTab("tab2", jPanel2);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, -30, 750, 510));
+
+        jLabel8.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jLabel8.setText("Login  As");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons8-export-25.png"))); // NOI18N
+        jLabel24.setText("Logout");
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
+
+        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel25.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons8-plus-25.png"))); // NOI18N
+        jLabel25.setText("Report");
+        jLabel25.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel25MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        jLabel26.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel26.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons8-dashboard-layout-25.png"))); // NOI18N
+        jLabel26.setText("Dashboard");
+        jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel26MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons8-bug-48.png"))); // NOI18N
+        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 50, 60));
+
+        jPanel3.setBackground(new java.awt.Color(255, 51, 51));
+
+        jLabel33.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("10");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 30, 20));
+
+        jLabel9.setBackground(new java.awt.Color(153, 102, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/bg12.jpg"))); // NOI18N
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 120, 480));
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(tf_bugName.getText().toString().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(null,"Enter A Bug Name");
+        }else{
+        if(jButton3.getText().equalsIgnoreCase("SUBMIT")){
+               String status  = jc_status.getSelectedItem().toString();
+        int bid = Integer.parseInt(l_bugId.getText());
+        int pid = (Integer)js_projectId.getValue();
+        dateTime();
+        db.insert(pid,bid , tf_bugName.getText(), ta_description.getText(), jt_path.getText(), status, l_dateTime.getText(),l_userName.getText());
+
+        }else{
+            
+            String status  = jc_status.getSelectedItem().toString();
+        int bid = Integer.parseInt(l_bugId.getText());
+        int pid = (Integer)js_projectId.getValue();
+        dateTime();
+        db.updateData(pid,bid , tf_bugName.getText(), ta_description.getText(), jt_path.getText(), status, l_dateTime.getText(),l_userName.getText());         
+        }
+        clearReport();
+        loadBugId(Integer.parseInt(js_projectId.getValue().toString()));
+        count++;
+        jPanel3.setVisible(true);
+        jLabel33.setText(""+count);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jtable_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtable_dashboardMouseClicked
+        // TODO add your handling code here:
+        int i = jtable_dashboard.getSelectedColumn();
+        int j = jtable_dashboard.getSelectedRow();
+        if(i == 4){
+          
+            int pid  = (Integer)jtable_dashboard.getValueAt(j, 0);
+            int bid = (Integer)jtable_dashboard.getValueAt(j, 1);
+          
+            new photo(pid, bid).setVisible(true);
+            
+            
+        }
+        if(i == 3){
+           
+            jPanel4.setVisible(true);
+            jLabel11.setText(jtable_dashboard.getValueAt(j, 3).toString());
+        }
+        
+    }//GEN-LAST:event_jtable_dashboardMouseClicked
+
+    private void js_projectIdStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_js_projectIdStateChanged
+        // TODO add your handling code here:
+       loadBugId(Integer.parseInt(js_projectId.getValue().toString()));
+        
+    }//GEN-LAST:event_js_projectIdStateChanged
+
+    private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
+        // TODO add your handling code here:
+         jLabel25.setForeground(Color.white);
+         jLabel26.setForeground(Color.black);
+                jButton3.setText("Update");
+       int row = -1;
+       row = jtable_dashboard.getSelectedRow();
+       if(row == -1){
+           JOptionPane.showMessageDialog(null,"Select A Row First");
+       }else{
+           js_projectId.setValue(jtable_dashboard.getValueAt(row, 0));
+           l_bugId.setText(jtable_dashboard.getValueAt(row, 1).toString());
+           tf_bugName.setText(jtable_dashboard.getValueAt(row, 2).toString());
+           ta_description.setText(jtable_dashboard.getValueAt(row, 3).toString());
+           //jc_status.setSelectedIndex();
+           String status = jtable_dashboard.getValueAt(row, 5).toString();
+           int i = 0;
+           for(String st : statusData){
+               
+               if(st.equals(status)){
+                   jc_status.setSelectedIndex(i);
+               }
+               i++;
+           }
+           
+           l_dateTime.setText(jtable_dashboard.getValueAt(row, 6).toString());
+           jt_path.setText(jtable_dashboard.getValueAt(row, 8).toString());
+           jTabbedPane1.setSelectedIndex(0);
+       }
+        
+    }//GEN-LAST:event_jLabel19MouseClicked
+
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+        int i = jtable_dashboard.getSelectedColumn();
+        int j = jtable_dashboard.getSelectedRow();
+        int pid  = (Integer)jtable_dashboard.getValueAt(j, 0);
+        int bid = (Integer)jtable_dashboard.getValueAt(j, 1);
+        
+        db.deleteData(pid, bid);
+        ((DefaultTableModel)jtable_dashboard.getModel()).removeRow(j);
+    }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
+        // TODO add your handling code here:
+        jPanel4.setVisible(false);
+        jLabel11.setText("");
+    }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
+        // TODO add your handling code here:
+        JFileChooser upload = new JFileChooser();
+        upload.showOpenDialog(null);
+        File file = upload.getSelectedFile();
+        
+        filename=file.getAbsolutePath();
+        jt_path.setText(filename);
+    }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
+        // TODO add your handling code here:
+                jt_path.setText("");
+    }//GEN-LAST:event_jLabel23MouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+        db.pushCount(count);
+        new LoginFrame().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
+        // TODO add your handling code here:
+        jLabel26.setForeground(Color.white);
+         jLabel25.setForeground(Color.black);
+        count = 0;
+        jPanel3.setVisible(false);
+                DefaultTableModel dm = (DefaultTableModel)jtable_dashboard.getModel();
+        while(dm.getRowCount() > 0)
+        {
+            dm.removeRow(0);
+        }
+
+        jTabbedPane1.setSelectedIndex(1);
+
+       db.popData((DefaultTableModel)jtable_dashboard.getModel());
+       
+       jtable_dashboard.getColumnModel().getColumn(8).setMinWidth(0);
+  jtable_dashboard.getColumnModel().getColumn(8).setMaxWidth(0);
+   jtable_dashboard.getColumnModel().getColumn(8).setWidth(0);
+        progressBar();
+    }//GEN-LAST:event_jLabel26MouseClicked
+
+    private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
+        // TODO add your handling code here:
+                clearReport();
+                jLabel26.setForeground(Color.black);
+                jLabel25.setForeground(Color.white);
+        loadBugId(Integer.parseInt(js_projectId.getValue().toString()));
+        jButton3.setText("SUBMIT");
+       jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_jLabel25MouseClicked
+
+    private void jLabel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseClicked
+        // TODO add your handling code here:
+        db.pushCount(count);
+
+       this.dispose();
+    }//GEN-LAST:event_jLabel29MouseClicked
+
+    private void jLabel30MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseClicked
+        // TODO add your handling code here:
+        this.setState(LoginFrame.ICONIFIED);
+    }//GEN-LAST:event_jLabel30MouseClicked
+
+    private void jLabel31MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel31MouseClicked
+        // TODO add your handling code here:
+         db.pushCount(count);
+        this.dispose();
+    }//GEN-LAST:event_jLabel31MouseClicked
+
+    private void jLabel32MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel32MouseClicked
+        // TODO add your handling code here:
+        this.setState(LoginFrame.ICONIFIED);
+    }//GEN-LAST:event_jLabel32MouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainFrame().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JTextArea jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JProgressBar jProgressBar3;
+    private javax.swing.JProgressBar jProgressBar4;
+    private javax.swing.JProgressBar jProgressBar5;
+    private javax.swing.JProgressBar jProgressBar6;
+    private javax.swing.JProgressBar jProgressBar7;
+    private javax.swing.JProgressBar jProgressBar8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JComboBox<String> jc_status;
+    private javax.swing.JSpinner js_projectId;
+    private javax.swing.JTextField jt_path;
+    private javax.swing.JTable jtable_dashboard;
+    private javax.swing.JLabel l_bugId;
+    private javax.swing.JLabel l_dateTime;
+    private javax.swing.JLabel l_userName;
+    private javax.swing.JTextArea ta_description;
+    private javax.swing.JTextField tf_bugName;
+    // End of variables declaration//GEN-END:variables
+byte[] photo=null;
+String filename=null;
+String[] statusData = {"New","Rejected","Deffered","Duplicate","In Progress.. ,","Fixed" ,"Closed" ,"Reopen"} ;
+int count  = 0;
+}
